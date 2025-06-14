@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './ProductCard.module.css';
 import { useDispatch } from 'react-redux';
-import { addItem } from '../Store/cartSlice';
+import { addItem } from '../Store/CartSlice';
 const ProductCard = ({ product }) => {
     const dispatch = useDispatch()
     const addCart = (product) => {
