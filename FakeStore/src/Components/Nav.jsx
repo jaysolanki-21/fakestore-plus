@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 const Nav = () => {
   const cartcounter = useSelector(state => state.cart.totalQuantity);
   console.log(cartcounter);
+
   return (
     <div className={style.nav}>
       <div className={style.logo}>
@@ -13,6 +14,9 @@ const Nav = () => {
       </div>
       <div className={style.menu}>
         <NavLink to="/">Products</NavLink>
+        <NavLink to="/add">
+          <button>Add Product</button>
+        </NavLink>
         <NavLink to="/cart">
           <button>
             Cart <span className={style.badge}>{cartcounter}</span>

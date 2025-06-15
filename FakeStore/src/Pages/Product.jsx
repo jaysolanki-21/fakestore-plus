@@ -22,6 +22,7 @@ const Product = () => {
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: '#F3F4F6',
+          height: '80vh',
         }}
       >
         {products.map((product) => (
