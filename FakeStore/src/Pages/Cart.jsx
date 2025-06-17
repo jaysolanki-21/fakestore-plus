@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './Cart.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { addItem, removeItem } from '../Store/CartSlice'; 
+import { addToCart, removeFromCart, clearCart } from '../Store/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.items);
+  const navigate = useNavigate();
 
-  const handleAdd = (item) => dispatch(addItem(item));
-  const handleRemove = (item) => dispatch(removeItem(item.id));
+  const user = useSelector((state) => state.user.user);
+  const cartItems = user?.cart || [];
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  }, [user, navigate]);
+
+  const handleAdd = (item) => dispatch(addToCart(item));
+  const handleRemove = (item) => dispatch(removeFromCart(item.id));
+  const handleClearCart = () => dispatch(clearCart());
 
   const totalPrice = cartItems
     .reduce((total, item) => total + item.price * item.quantity, 0)
@@ -33,13 +44,22 @@ const Cart = () => {
                 <span>{item.quantity}</span>
                 <button onClick={() => handleAdd(item)}>+</button>
               </div>
-              <p className={styles.total}>Total: ${(item.price * item.quantity).toFixed(2)}</p>
+              <p className={styles.total}>
+                Total: ${(item.price * item.quantity).toFixed(2)}
+              </p>
             </div>
           </div>
         ))}
       </div>
+
       <div className={styles.summary}>
         <span>Total:</span> <strong>${totalPrice}</strong>
+      </div>
+
+      <div className={styles.actions}>
+        <button className={styles.clearButton} onClick={handleClearCart}>
+          Clear Cart 🧹
+        </button>
       </div>
     </div>
   );

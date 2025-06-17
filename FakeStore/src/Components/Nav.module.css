@@ -1,55 +1,101 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'DM Sans', sans-serif;
+/* existing styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'DM Sans', sans-serif;
 }
 
-
-.nav{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #F9FAFB;
-    height: 3rem;
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #F9FAFB;
+  padding: 0.5rem 1rem;
+  position: relative;
 }
 
-button{
-    background-color: #2563EB;
-    color: #F9FAFB;
-    border: none;
+.logo {
+  color: #1F2937;
+}
+
+.logo h1 {
+  font-size: 1.6rem;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+}
+
+.menu a {
+  text-decoration: none;
+  margin-right: 1rem;
+  color: #4B5563;
+}
+
+.menu a:hover {
+  color: #2563EB;
+}
+
+.badge {
+  background-color: #2563EB;
+  color: #F9FAFB;
+  border-radius: 50%;
+  padding: 0.3rem 0.3rem;
+  font-size: 0.8rem;
+}
+
+button {
+  background-color: #2563EB;
+  color: #F9FAFB;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+}
+
+/* Hamburger icon */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger span {
+  height: 3px;
+  width: 25px;
+  background: #1F2937;
+  margin-bottom: 4px;
+  border-radius: 5px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+    position: absolute;
+    top: 3rem;
+    right: 1rem;
+    background: white;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    /* padding: 1rem; */
     border-radius: 0.5rem;
-    padding: 0.5rem 1.2rem;
-    cursor: pointer;
-}
+    z-index: 999;
+  }
 
-.logo{
-    margin-left: 1rem;
-    color: #1F2937;
-}
+  .menu.open {
+    display: flex;
+  }
 
-.logo h1{
-    font-size: 1.6rem;
-}
+  .menu a,
+  .menu button {
+    margin: 0.5rem 0;
+  }
 
-.menu{
-    margin-right: 1rem;
-}
-
-.menu a{
-    text-decoration: none;
-    margin-right: 1rem;
-    color: #4B5563;
-}
-
-.menu a:hover{
-    color: #2563EB;
-}
-
-.badge{
-    background-color: #2563EB;
-    color: #F9FAFB;
-    border-radius: 50%;
-    padding: 0.3rem 0.3rem;
-    font-size: 0.8rem;
+  .hamburger {
+    display: flex;
+  }
 }

@@ -95,3 +95,21 @@
   font-size: 1.4rem;
   color: #6b7280;
 }
+
+.actions {
+  margin-top: 1rem;
+  text-align: right;
+}
+
+.clearButton {
+  background-color: #ef4444; /* red */
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+.clearButton:hover {
+  background-color: #dc2626;
+}

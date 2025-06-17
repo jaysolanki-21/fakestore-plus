@@ -1,33 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import style from './AddProduct.module.css';
 import { useForm } from 'react-hook-form';
 import { nanoid } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../Store/productSlice';
 import { useNavigate } from 'react-router-dom';
-import  Swal from 'sweetalert2'
+import { toast } from 'react-toastify';
 
 const AddProduct = () => {
-    const Navigate = useNavigate();
-    const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.user.user);
+  console.log(user);
+  
+  const isAdmin = user?.isAdmin;
+  console.log(isAdmin);
+
+  useEffect(() => {
+    if (!user) {
+      toast.error("Please login first!");
+      navigate('/login');
+    } else if (!isAdmin) {
+      toast.error("Unauthorized: Admin access only.");
+      navigate('/');
+    }
+  }, [user, isAdmin, navigate]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     data.id = nanoid();
     dispatch(addProduct(data));
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Product Added Successfully',
-      showConfirmButton: true,
-      timer: 1500
-    })
-    Navigate('/');
-    console.log(data);
+    toast.success("✅ Product added successfully!");
+    navigate('/');
   };
 
   return (
@@ -35,7 +45,6 @@ const AddProduct = () => {
       <h2 className={style.heading}>Add New Product</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
-        
         <div className={style.formGroup}>
           <label htmlFor="title">Title</label>
           <input
