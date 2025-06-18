@@ -9,13 +9,18 @@ const productSlice = createSlice({
       return action.payload;
     },
     addProductToStore(state, action) {
-      state.push(action.payload); // Add new product to local state
+      state.push(action.payload); 
+      
+    },
+    removeProductFromStore(state, action) {
+      state = state.filter((product) => product.id !== action.payload); 
+      return state;
     },
   },
 });
 
 export default productSlice.reducer;
-export const { setProducts, addProductToStore } = productSlice.actions;
+export const { setProducts, addProductToStore, removeProductFromStore } = productSlice.actions;
 
 export const fetchProducts = () => async (dispatch) => {
   try {
@@ -33,5 +38,14 @@ export const addProduct = (productData) => async (dispatch) => {
     dispatch(addProductToStore(response.data));
   } catch (error) {
     console.error('Error adding product:', error);
+  }
+};
+
+export const removeProduct = (productId) => async (dispatch) => {
+  try {
+    await axios.delete(`http://localhost:3000/products/${productId}`);
+    dispatch(removeProductFromStore(productId));
+  } catch (error) {
+    console.error('Error removing product:', error);
   }
 };
